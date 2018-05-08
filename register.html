@@ -1,4 +1,5 @@
-<!doctype html>
+<!--THIS PAGE WILL REPRESENT A REGISTRATION FORM-->
+
 <html lang="en">
   <head>
     <!-- Required meta tags -->
@@ -10,14 +11,15 @@
 
     <link rel="stylesheet" href="../admin/custom/css/bootstrap/bootstrap.min.css">
 
-    <title>Alexis.com</title>
+    <title>Registration | wegotyou.in</title>
   </head>
   <body>
 
+    <!--NAVBAR....................................-->
       <nav class="navbar navbar-dark bg-dark fixed-top">
           <div class="container-fluid">
             <div class="navbar-header">
-              <a class="navbar-brand" href="#"><span style="color:red;"> <i class="fas fa-heartbeat"></i> Alexis.com </span>- Registration</a>
+              <a class="navbar-brand" href="#"><span style="color:red;"> <i class="fas fa-heartbeat"></i> WeGotYou </span>- Registration</a>
             </div>
             <ul class="nav navbar-nav navbar-right">
               <li><a href="#" style="color: white;"><span  class="fas fa-sign-in-alt"></span><b> Login</b></a></li>
@@ -29,18 +31,103 @@
       
     <div class="container well">
         <br><br><br>
-        <div class="row" id="mainForm">
-       
-            <div class="col-md-6">
+<!--KEY CHECK.....................................-->
+        <div class="row" id="step1">
+            <div class="col-sm-12">
+                <h5>STEP 1 of 2.....</h5>
+            </div>            
+            <br>
+            <br>
+          
+            <div class="col-md-6 col-sm-12">
 
-            <div class="form-group">  
-                <label for="rescueType"><b>Select the rescue center :</b> </label>
-                <select name="rescueType" class="form-control" id="rescueType" onchange="editName();">
-                    <option>Hospital</option>
-                    <option>Police Station</option>
-                    <option>Civil Office</option>
-                </select>
-              </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                                <div class="input-group-prepend">
+                                        <span class="input-group-text" id="rescueTypeLabel" for="rescueType">Select Rescue Type </span>
+                                </div>  
+                            <select autofocus name="rescueType" class="form-control" id="rescueType" onchange="editName();">
+                                    <option>Hospital</option>
+                                    <option>Police Station</option>
+                                    <option>Civil Office</option>
+                                    <option>Car Workshop</option>
+                                </select>
+                        </div>
+                    </div>
+                </div>
+
+            <div class="col-md-6 col-sm-12">
+                <div class="form-group">
+                        <small class="err" id="uniqueKeyErr"></small> 
+
+                    <div class="input-group">
+                            <input type="text" placeholder="Enter 6-digit unique key" maxlength="6" name="uniqueKey" class="form-control" id="uniqueKey">
+                            <div class="input-group-append">
+                                    <span class="input-group-text" style="font-size: 1x;" id="keyCheckStatus"> <i class="fa fa-key"></i></span>
+                            </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-sm-12">
+                <div class="form-group">
+                    <small class="err" id="userNameErr"></small>
+                    <div class="input-group">
+
+                        <input type="text" placeholder="Enter an username" name="userName" class="form-control" id="userName" >
+                        <div class="input-group-append">
+                               <span class="input-group-text" style="font-size: 1x;" id="userNameStatus"><i class="fa fa-user"></i></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-sm-12">
+                    <div class="form-group">    
+                        <div class="input-group">
+                                <input type="password" placeholder="password" name="password" class="form-control" id="password">
+                                <div class="input-group-append">
+                                        <span class="input-group-text" style="font-size: 1x;" id="passwordStatus"> <i class="fa fa-lock" id="passwordIcon"></i></span>
+                                </div>
+                        </div>
+                    </div>
+            </div>
+
+            <div class="col-md-6 col-sm-12">
+                    <div class="form-group">    
+                        <div class="input-group">
+                                <input type="password" placeholder="Confirm password" name="passwordCnf" class="form-control" id="passwordCnf">
+                                <div class="input-group-append">
+                                        <span class="input-group-text" style="font-size: 1x;" id="passwordCnfStatus"> <i class="fa fa-lock" id="passwordCnfIcon"></i></span>
+                                </div>
+                        </div>
+                        <span id="passwordErr"></span>
+                    </div>
+            </div>
+    
+    
+
+            <div class="col-md-6 form-group">  
+                <button class="btn btn-success btn-right" id="proceedButton" onclick="validateForm1();" >Proceed</button>
+            </div>
+
+
+        </div>
+
+
+        <a id="homePageLink" class="text-center" href="index.html">Go to home page</a>
+
+
+
+<!--MAIN FORM.....................................-->
+        <div class="row" id="step2"  hidden>
+                <div class="col-sm-12">
+                        <h5>STEP 2 of 2.....</h5>
+                    </div>            
+                    <br>
+                    <br>
+        
+            <div class="col-md-6">
              
               <div class="form-group">  
                 <small class="err" id="rescueNameErr"></small> 
@@ -105,9 +192,9 @@
     <p class="display-1 text-center" style="padding-top: 15%;" id="loader" hidden>
         <i class="fa fa-heartbeat" style=" font-size:200px; position: relative; top:40%; color:red"></i>
            <span id="message"> Registering
-        <i class="fa fa-spinner fa-spin" style=""></i></span>
+        <i class="fa fa-spinner fa-spin"></i></span>
     </p>
-
+    <a id="homePageLink" class="text-center" hidden href="index.html">Go to home page</a>
 
     </div>
     
@@ -158,20 +245,20 @@
             var rescueName = document.getElementById("rescueName");
             if(name.value == "Police Station")
             {
-                rescueName.placeholder = "Enter police station branch name"
+                rescueName.placeholder = "Enter police station branch name";
             }
-            else if(name.value = "Hospital")
+            else if(name.value == "Hospital")
             {
-                rescueName.placeholder = "Enter hospital name"
+                rescueName.placeholder = "Enter hospital name";
             }
-            else if(name.value = "Civil Office"){
-                rescueName.placeholder = "Enter office branch"
-            }else(
-                alert("Please select one option")
-            )
-        }
-
-  
+            else if(name.value == "Civil Office"){
+                rescueName.placeholder = "Enter office branch name";
+            }
+            else if(name.value == "Car Workshop"){
+                rescueName.placeholder = "Enter car workshop name/branch name";
+            }
+         }            
+ 
     </script>
 
 

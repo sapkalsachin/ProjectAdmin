@@ -1,0 +1,59 @@
+.text-red{
+    color: rgba(228, 20, 58, 0.981);
+}
+
+#ringerDiv{
+    margin:5% auto;
+    
+}
+
+.cardShadow{
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 10px 20px 0 rgba(0, 0, 0, 0.7);
+}
+
+.ringerContainer{
+    top: 0%;
+    z-index: 5000;
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    background-color: rgba(1, 1, 15, 0.603);
+}
+
+ #tempMap{
+     height: 90%;
+     width: 100%;
+ }
+
+ #tempTravelInfo{
+     height: 10%;
+     width: 100%;
+     background-color: white;
+ }
+
+.bel {
+    animation: shake 0.5s 0.5s ease-in-out;
+    animation-iteration-count: infinite;
+  }
+  
+  @keyframes shake {
+    0% { transform:  rotate(1deg); }
+    25% { transform:  rotate(0deg); }
+    50% { transform:  rotate(-1deg); }
+    75% { transform:  rotate(0deg); }
+    100% { transform:  rotate(1deg); }
+  }
+
+  #tempMapContainer{
+      width: 50%;
+      height: 300px;
+      max-height: 350px;
+      background-color: rgba(171, 177, 171, 1);
+  }
+
+  #tempDetails{
+      width: 50%;
+      height: 300px;
+      max-height: 350px;
+  }

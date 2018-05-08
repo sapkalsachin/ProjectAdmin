@@ -1,133 +1,91 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
-    <link rel="stylesheet" href="custom/css/fontawesome.css">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <title>Login | wegotyou.in</title>
+  <!-- Bootstrap core CSS-->
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Custom fonts for this template-->
+  <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <!-- Custom styles for this template-->
+  <link href="css/sb-admin.css" rel="stylesheet">
+</head>
 
-    <title>Alexis.com</title>
-  </head>
-  <body>
-
-      <nav class="navbar navbar-dark bg-dark fixed-top">
-          <div class="container-fluid">
-            <div class="navbar-header">
-              <a class="navbar-brand" href="#"><span style="color:red;"> <i class="fas fa-heartbeat"></i> Alexis.com </span>- Registration</a>
+<body style="background-color:rgb(149, 170, 189)">
+  <div class="container">
+    <div class="card card-login mx-auto mt-5">
+      <div class="card-header text-center display-4"><i class="fa fa-user"></i> Login</div>
+      <div class="card-body">
+          <div class="form-group">
+            <label for="useraname">Username</label>
+            <input class="form-control" id="username" type="text" placeholder="Username">
+          </div>
+          <div class="form-group">
+            <label for="exampleInputPassword1">Password</label>
+            <input class="form-control" id="password" type="password" placeholder="Password">
+          </div>
+          <div class="form-group">
+            <div class="form-check">
+              <label class="form-check-label">
+                <input class="form-check-input" type="checkbox" id="remember" checked>Keep me logged in</label>
             </div>
-            <ul class="nav navbar-nav navbar-right">
-              <li><a href="#" style="color: white;"><span  class="fas fa-sign-in-alt"></span><b> Login</b></a></li>
-            </ul>
           </div>
-      </nav>
-
-    
-      
-    <div class="container well">
-        <br><br><br>
-  
-        <div class="row">
-          <div class="col-md-6">
-              <div class="form-group">  
-                  <label for="rescueType"><b>Select the rescue center :</b> </label>
-                  <select name="rescueType" class="form-control" id="rescueType">
-                      <option>Hospital</option>
-                      <option>Police Station</option>
-                      <option>Civil Office</option>
-                  </select>
-                </div>
-               
-                <div class="form-group">  
-                    <label for="branchName"><b>Branch Name :</b></label>
-                    <input type="text" placeholder="Branch Name" name="branchName" class="form-control" id="branchName">
-                </div>
-               
-                <div class="form-group">  
-                    <label for="contactNo"><b>Contact Number :</b> </label>
-                    <input type="text" placeholder="Contact Number" name="contactNo" class="form-control" id="contactNo">
-                </div>
-
-                <div class="form-group">  
-                    <label for="address"><b>Address :</b></label>
-                    <input type="text" placeholder="Address" name="address" class="form-control" id="address">
-                </div>
-   
-          </div>
-          <div class="col-md-6">
-
-                <div class="form-group">  
-                    <label for="city"><b>City :</b></label>
-                    <input type="text" placeholder="City" name="city" class="form-control" id="city">
-                </div>
-
-                
-                <div class="form-group">  
-                    <label for="pincode"><b>Pincode :</b></label>
-                    <input type="text" pattern="[0-9]{4}" maxlength="6" placeholder="Pincode" name="pincode" class="form-control" id="pincode">
-                </div>
-
-                <!--Requires validation and filteration-->
-                <div class="form-group">  
-                    <label for="state"><b>State :</b></label>
-                    <input type="text" pattern="[A-Z]" placeholder="State" name="state" class="form-control" id="state">
-                </div>
-
-                <label for="location"><b>Location :</b></label>
-
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text btn btn-primary" style="background-color: blue; color: #fff" onclick="getLocation()" id="location">Find Location</span>
-                    </div>
-                    <input type="text" class="form-control" style="background-color: #fff;" name="lattitude" id="lattitude" placeholder="Lattitude" readonly>
-                    <input type="text" class="form-control" style="background-color: #fff;" name="longitude" id="longitude" placeholder="Longitude" readonly>
-                </div>
-                <br>                
-          </div>
+          <button class="btn btn-primary btn-block" onclick="login();">Login</button>
+        <div class="text-center">
+          <a class="d-block small mt-3" href="../register.html">Register an Account</a>
+          <a class="d-block small" href="forgot-password.html">Forgot Password?</a>
         </div>
-        <div class="col-md-12 col-sm-hidden" style="height:200px" id="map" class="row">
-
-        </div>
+      </div>
     </div>
-
-<!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script defer src="https://use.fontawesome.com/releases/v5.0.10/js/all.js" integrity="sha384-slN8GvtUJGnv6ca26v8EzVaR9DC58QEwsIk9q1QXdCU8Yu8ck/tL/5szYlBbqmS+" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?callback=myMap"></script>
-    
-<!--Script for geolocation Coordinates-->
-<script>
-    var x = document.getElementById("lattitude");
-    var y = document.getElementById("longitude");
-    
-    function getLocation() {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(showPosition);
-        } else { 
-            alert("Geolocation is not supported by this browser. Kindly use different browser...");
-        }
-    }
-    
-    function showPosition(position) {
-        x.value = position.coords.latitude; 
-        y.value = position.coords.longitude;
-        myMap(x.value, y.value);
-    }
-    function myMap(x,y) {
-      var myCenter = new google.maps.LatLng(x,y)
-  var mapCanvas = document.getElementById("map");
-  var mapOptions = {center: myCenter, zoom: 17};
-  var map = new google.maps.Map(mapCanvas, mapOptions);
-  var marker = new google.maps.Marker({position:myCenter});
-  marker.setMap(map);    }
-    </script>
+  </div>
+  <!-- Bootstrap core JavaScript-->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- Core plugin JavaScript-->
+  <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+  <script>
 
 
-  
-  </body>
+    function login(){
+      var useraname = document.getElementById("username");
+      var password = document.getElementById("password");
+      var remember = document.getElementById("remember");
+
+       var obj = {
+                "username" : username.value,
+                "password" : password.value,
+                "remember"  :  remember.checked
+            };
+
+      dbParam = JSON.stringify(obj);
+      xmlhttp = new XMLHttpRequest();
+      xmlhttp.onreadystatechange = function() {
+          if (this.readyState == 4 && this.status == 200) {
+              var myObj = JSON.parse(this.responseText);
+              if(myObj["Status"] == "Success"){
+
+                    alert("LOGGED IN");
+
+                  }else if(myObj["Status"] == "Failure"){
+
+                    alert("FAILED");
+                    
+              }
+          }
+      };
+      var url = "../php/login.php";
+      xmlhttp.open("POST", url, true);
+      xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+      xmlhttp.send("x=" + dbParam);
+
+}
+
+</script>
+</body>
+
 </html>
