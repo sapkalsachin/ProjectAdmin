@@ -1,5 +1,8 @@
 (function($) {
-  "use strict"; // Start of use strict
+  "use strict";
+  $("body").toggleClass("sidenav-toggled");
+
+  // Start of use strict
   // Configure tooltips for collapsed side navigation
   $('.navbar-sidenav [data-toggle="tooltip"]').tooltip({
     template: '<div class="tooltip navbar-sidenav-tooltip" role="tooltip" style="pointer-events: none;"><div class="arrow"></div><div class="tooltip-inner"></div></div>'
