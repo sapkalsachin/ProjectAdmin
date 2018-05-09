@@ -4,19 +4,24 @@
 
     require("../../db/db.php");
     if(isset($_GET["Id"]) && isset($_GET["Action"])){
-        notificationAction($_GET["Id"], $_GET["Action"]);
+        if($_GET["Action"] == "Accept")
+            $response = "Accepted";
+        else
+            $response = "Rejected";
+
+        notificationAction($_GET["Id"], $response);
+    }else{
+
+        //$rescueCenterId = $_SESSION["rescueCenterId"];
+        $rescueCenterId = "hosp4";
+
+        getNotification($rescueCenterId);
     }
-
-    //$rescueCenterId = $_SESSION["rescueCenterId"];
-    $rescueCenterId = "hosp4";
-
-    getNotification($rescueCenterId);
-
     function getNotification($rescueCenterId)
     {
         //PREPARE QUERY-----------------------------------------------------
      
-            $sql = 'SELECT * FROM notifications WHERE rescueid = :rescueid && response = "Pending"';
+            $sql = 'SELECT * FROM notifications WHERE rescueid = :rescueid && response = "Pending" ORDER BY id DESC LIMIT 1';
   
             try{
             //Get DB Object........
@@ -76,10 +81,17 @@
                     echo'{"Status":"Failure", "Message":"Oops. You got late to respond :("}';
                     die();
                 }elseif($row["response"] == "Pending"){
-                    $response = "Accepted";
+
+                    if($response == "Accepted")
+                        $message = "Thank you so much for helping :)";
+                    else
+                        $message = "Request rejected :(";
+
+
+
                     $stmt1->bindParam(':response', $response);
                     $stmt1->execute();
-                    echo'{"Status":"Success", "Message":"Thank you so much for helping :)"}';
+                    echo'{"Status":"'.$response.'", "Title":"Done" , "Message":"'.$message.'"}';
                     die();
                 }
             }
