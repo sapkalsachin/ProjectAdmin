@@ -14,11 +14,15 @@
   <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
   <!-- Custom styles for this template-->
   <link href="css/sb-admin.css" rel="stylesheet">
+  <link href="css/custom.css" rel="stylesheet">
 </head>
 
-<body style="background-color:rgb(149, 170, 189)">
+<body style="background-color:rgb(31, 32, 34)" onload="autoLogin()">
   <div class="container">
-    <div class="card card-login mx-auto mt-5">
+
+
+<!-- ********************************************LOGIN CARD*********************************************** -->
+    <div class="card card-login mx-auto mt-5" id="loginCard" hidden>
       <div class="card-header text-center display-4"><i class="fa fa-user"></i> Login</div>
       <div class="card-body">
           <div class="form-group">
@@ -38,11 +42,29 @@
           <button class="btn btn-primary btn-block" onclick="login();">Login</button>
         <div class="text-center">
           <a class="d-block small mt-3" href="../register.html">Register an Account</a>
-          <a class="d-block small" href="forgot-password.html">Forgot Password?</a>
+          <!-- <a class="d-block small" href="forgot-password.html">Forgot Password?</a> -->
         </div>
       </div>
     </div>
+
+<!-- *****************************************END OF LOGIN CARD******************************************** -->
+
+
+
+<!-- *****************************************AUTO REDIRECT************************************************ -->
+<div id="loader">
+<div class="lds-facebook"  style="top: 250px; left: 45%;"><div></div><div></div><div></div></div>
+<h3 class="" style="position : relative; top: 270px; text-align: center; z-index: 500; color: white" id="redirectDialog">wegotyou.in</h3>
+</div>
+
+<!-- *************************************END OF AUTO REDIRECT********************************************* -->
+
   </div>
+
+
+
+
+
   <!-- Bootstrap core JavaScript-->
   <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -51,41 +73,86 @@
   <script>
 
 
+//MANUAL LOGIN **************************************************************
     function login(){
-      var useraname = document.getElementById("username");
-      var password = document.getElementById("password");
-      var remember = document.getElementById("remember");
+      var username = document.getElementById("username").value;
+      var password = document.getElementById("password").value;
+      var remember = document.getElementById("remember").checked;
 
-       var obj = {
-                "username" : username.value,
-                "password" : password.value,
-                "remember"  :  remember.checked
+      if(username == "" || password == ""){
+        var err = true;
+      }else{
+       var err = false;
+      }
+
+      if(err == true){
+        alert("Please fill all the fields");
+        return;
+
+      }
+      else{
+            var obj = {
+                      "username" : username,
+                      "password" : password,
+                      "remember"  :  remember
+                  };
+
+            dbParam = JSON.stringify(obj);
+            xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    var myObj = JSON.parse(this.responseText);
+                    if(myObj["Status"] == "Success"){
+
+                          alert("LOGGED IN");
+
+                        }else if(myObj["Status"] == "Failure"){
+
+                          alert("FAILED");
+                          
+                    }
+                }
             };
-
-      dbParam = JSON.stringify(obj);
-      xmlhttp = new XMLHttpRequest();
-      xmlhttp.onreadystatechange = function() {
-          if (this.readyState == 4 && this.status == 200) {
-              var myObj = JSON.parse(this.responseText);
-              if(myObj["Status"] == "Success"){
-
-                    alert("LOGGED IN");
-
-                  }else if(myObj["Status"] == "Failure"){
-
-                    alert("FAILED");
-                    
-              }
-          }
-      };
-      var url = "../php/login.php";
-      xmlhttp.open("POST", url, true);
-      xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-      xmlhttp.send("x=" + dbParam);
-
+            var url = "php/login.php";
+            xmlhttp.open("POST", url, true);
+            xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xmlhttp.send("x=" + dbParam);
+    }
 }
 
+
+
+//AUTO LOGIN**************************************************************************************
+function autoLogin(){
+
+            xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    var myObj = JSON.parse(this.responseText);
+                    if(myObj["Status"] == "Success"){
+                          document.getElementById("redirectDialog").innerHTML = "Welcome Back :)"
+                          window.location.replace("dashboard.html");
+                        }else if(myObj["Status"] == "Failure"){
+                          document.getElementById("loader").hidden = true;
+                          document.getElementById("loginCard").hidden = false;                          
+                    }
+                }
+            };
+            var url = "php/login.php";
+            xmlhttp.open("GET", url, true);
+            xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xmlhttp.send();
+}
+
+
+
 </script>
+
+
+
+
+
+
 </body>
 
 </html>

@@ -6,6 +6,9 @@
 var responce;
 var lastId;
 var intervalClearance = true;
+
+
+//Funtion That will fetch notifications----------------------
 function getNotifications(){
         xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {
@@ -43,10 +46,10 @@ function getNotifications(){
         xhttp.open("GET", url, true);
         xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xhttp.send();
-    }
+}
 
 
-
+//Function that will send response to server-----------------
 function notificationAction(action){
     window.intervalClearance = false;
     xhttp = new XMLHttpRequest();
@@ -87,34 +90,34 @@ function notificationAction(action){
 }
 
 
-
-//COUNTER FUNCTION TO SHOW COUNTER AND AUTO REJECTION
-
+//COUNTER FUNCTION TO SHOW COUNTER AND AUTO REJECTION--------
 function counter(){
     var seconds = 30;
-// Update the count down every 1 second
+    // Update the count down every 1 second
     var x = setInterval(function() {
 
-    // Output the result in an element with id="countDown"
-    document.getElementById("countDownContainer").innerHTML = "Auto rejects in "+ seconds +" Sec" ;
-    seconds -=1;
-    // If the count down is over, write some text 
-    if (seconds == 0 && window.intervalClearance == true) {
-        notificationAction("Reject");
-        document.getElementById("countDownContainer").innerHTML = "Response sent";
-        clearInterval(x);
-        return;
-    }else if(window.intervalClearance == false){
-        document.getElementById("countDownContainer").innerHTML = "Response sent";
-        clearInterval(x);
-        return;
-    }
-}, 1000);
+        // Output the result in an element with id="countDown"
+        document.getElementById("countDownContainer").innerHTML = "Auto rejects in "+ seconds +" Sec" ;
+        seconds -=1;
+        // If the count down is over, write some text 
+        if (seconds == 0 && window.intervalClearance == true) {
+            notificationAction("Reject");
+            document.getElementById("countDownContainer").innerHTML = "Response sent";
+            clearInterval(x);
+            return;
+        }else if(window.intervalClearance == false){
+            document.getElementById("countDownContainer").innerHTML = "Response sent";
+            clearInterval(x);
+            return;
+        }
+
+    }, 1000);
+
 }
 
 
 
-//FUNCTION TO SHOW MAIN DETAILS
+//FUNCTION TO SHOW MAIN DETAILS------------------------------
  function showMainDetails(){
         alert("me too");
         alert(window.response["Status"]);

@@ -144,72 +144,84 @@
   </nav>
 
 
+<!-- Navbar chhodke baki sab content-wraper me jayega************************************************** -->
+
   <div class="content-wrapper">
     <div class="container-fluid" style="margin: 10px 0px;">
-      <div class="row">
-        <div class="col-md-8 col-lg-8">
-          <div class="card map" id="map">
-            <div class="card-header">
-              <i class="fa fa-location-arrow"></i> <b>Map</b></div>
-            <div class="card-body" id="mainMap">
-              <h3 class="text-center" style="position: relative; top: 300px;">wegotyou.in</h3>
+
+    <!-- First row************************************************************************ -->
+          <div class="row">
+            <div class="col-md-8 col-lg-8">
+              <div class="card map" id="map">
+                <div class="card-header">
+                  <i class="fa fa-location-arrow"></i> <b>Map</b></div>
+                <div class="card-body" id="mainMap">
+                  <h3 class="text-center" style="position: relative; top: 300px;">wegotyou.in</h3>
+                </div>
+                <div class="card-footer small text-muted">
+                    <b class="float-left">Distance : <span id="mainDistance">-----------</span> </b>
+                    <b class="float-right">Travel Time : <span id="mainTravelTime">-----------</span></b>
+                </div>
+              </div>  
             </div>
-            <div class="card-footer small text-muted">
-                <b class="float-left">Distance : <span id="mainDistance">-----------</span> </b>
-                <b class="float-right">Travel Time : <span id="mainTravelTime">-----------</span></b>
-            </div>
-          </div>  
-        </div>
 
-        <div class="col-md-4 col-lg-4">
-          <div class="card details" id="details">
-            <div class="card-header">
-              <i class="fa fa-info-circle"></i> <b>Details</b>
-            </div>
-            <div class="card-body">
 
-                <table class="table table-borderless" style="font-size: 1em">
-                    <tbody>
+            <!-- DETAILS WALA CARD*************************** -->
+            <div class="col-md-4 col-lg-4">
+              <div class="card details" id="details">
+                <div class="card-header">
+                  <i class="fa fa-info-circle"></i> <b>Details</b>
+                </div>
+                <div class="card-body">
 
-                      <tr>
-                        <th class="text-right">Situation : </th>
-                        <td class="text-left" id="situation">-----------</td>
-                      </tr>
-                      <tr>
-                          <th class="text-right">Location : </th>
-                          <td class="text-left" id="mainLocation">-----------</td>
-                      </tr>
-                      <tr>
-                          <th class="text-right">Time : </th>
-                          <td class="text-left" id="mainTime">-----------</td>
-                      </tr>
-                      <tr>
-                        <th class="text-right">Vehicle Owner : </th>
-                        <td class="text-left" id="ownerName">-----------</td>
-                      </tr>
-                      <tr>
-                        <th class="text-right">Mobile : </th>
-                        <td class="text-left" id="mainMobile">-----------</td>
-                      </tr>
-                      <tr>
-                          <th class="text-right">Car No : </th>
-                          <td class="text-left" id="carNo">-----------</td>
-                      </tr>
-                      <tr>
-                          <th class="text-right">Car colour : </th>
-                          <td class="text-left" id="carColor">-----------</td>
-                      </tr>
-                      <tr>
-                          <th class="text-right">Car Modal : </th>
-                          <td class="text-left" id="carModel">-----------</td>
-                      </tr>                    
-                    </tbody>
-                  </table>
+                    <table class="table table-borderless" style="font-size: 1em">
+                        <tbody>
 
+                          <tr>
+                            <th class="text-right">Situation : </th>
+                            <td class="text-left" id="situation">-----------</td>
+                          </tr>
+                          <tr>
+                              <th class="text-right">Location : </th>
+                              <td class="text-left" id="mainLocation">-----------</td>
+                          </tr>
+                          <tr>
+                              <th class="text-right">Time : </th>
+                              <td class="text-left" id="mainTime">-----------</td>
+                          </tr>
+                          <tr>
+                            <th class="text-right">Vehicle Owner : </th>
+                            <td class="text-left" id="ownerName">-----------</td>
+                          </tr>
+                          <tr>
+                            <th class="text-right">Mobile : </th>
+                            <td class="text-left" id="mainMobile">-----------</td>
+                          </tr>
+                          <tr>
+                              <th class="text-right">Car No : </th>
+                              <td class="text-left" id="carNo">-----------</td>
+                          </tr>
+                          <tr>
+                              <th class="text-right">Car colour : </th>
+                              <td class="text-left" id="carColor">-----------</td>
+                          </tr>
+                          <tr>
+                              <th class="text-right">Car Modal : </th>
+                              <td class="text-left" id="carModel">-----------</td>
+                          </tr>                    
+                        </tbody>
+                      </table>
+
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
+    <!-- First row ends here **************************************************************  -->
+
+
+
+
+
     </div>
 
     <!-- /.container-fluid-->
@@ -217,15 +229,20 @@
     <footer class="sticky-footer">
       <div class="container">
         <div class="text-center">
-          <small class="text-red">Copyright © wegotyou.in 2018</small>
+          <small class="text-red">© wegotyou.in 2018</small>
         </div>
       </div>
     </footer>
+
+
     <!-- Scroll to Top Button-->
     <a class="scroll-to-top rounded" href="#page-top">
       <i class="fa fa-angle-up"></i>
     </a>
-    <!-- Logout Modal-->
+
+
+
+    <!-- Logout Modal ++++++++++++++++++++++++++++++++++ -->
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -243,23 +260,32 @@
         </div>
       </div>
     </div>
-    <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-    <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin.js"></script>
+    <!-- Logout Modal ends here ++++++++++++++++++++++++++++++++++ -->
+
+
+
+
   </div>
+  <!-- Content-Wraper ends here***************************************************************************************************** -->
 
 </div>
+
+
+
+
+
+<!--******************************* Authentication message window *******************************-->
 
 <div style="color:#f94808" id="authenticationMessage" hidden >
   <p class="display-1 text-center"><b>:( Authentication required</b></p>
   <br>
   <p class="text-center">Please visit <a href="index.html">index.html</a> page...</p>
 </div>
+<!-- Authentication message ends here************************************************************ -->
   
+
+
+<!-- Ringer Div********************************************************************************** -->
 <div class="ringerContainer" id="ringerContainer" hidden>
   <div class="container" id="ringerDiv">
     <div class="row">
@@ -315,11 +341,19 @@
     </div>
   </div>
 </div>
+
+<!-- Ringer Div Ends here********************************************************************** -->
+
+
+
+
+
+
   <div class="modal fade" id="responseModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="responseModalTitle">Modal title</h5>
+            <h5 class="modal-title" id="responseModalTitle"></h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -336,10 +370,15 @@
       </div>
     </div>
 
-
-
+    
 </body>
-
+    <!-- Bootstrap core JavaScript-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <!-- Custom scripts for all pages-->
+    <script src="js/sb-admin.js"></script>
 
 <script>
     function startTime() {
