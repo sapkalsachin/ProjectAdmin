@@ -119,8 +119,8 @@ function counter(){
 
 //FUNCTION TO SHOW MAIN DETAILS------------------------------
  function showMainDetails(){
-        alert("me too");
-        alert(window.response["Status"]);
+        // alert("me too");
+        // alert(window.response["Status"]);
     //To display map
         mapDiv = document.getElementById("mainMap");
         origin = {lat: response.Message.source["lat"], lng: response.Message.source["lng"]};
