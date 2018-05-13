@@ -1,7 +1,16 @@
 (function($){
+    checkSession();
+    if(window.validate){
+        document.getElementById("dashboardToggle").hidden = false;
+        document.getElementById("authenticationMessage").hidden = true;
 
-    //CALLING getNotifications() function
-    getNotifications();
+        //CALLING getNotifications() function
+        getNotifications();
+    }else{
+        document.getElementById("authenticationMessage").hidden = false;
+        document.getElementById("dashboardToggle").hidden = true;
+
+    }
 })(jQuery);
 var responce;
 var lastId;
@@ -35,6 +44,12 @@ function getNotifications(){
                         initMap(mapDiv, origin, destination);
                         window.intervalClearance = true;
                         counter();
+
+                        //PLAY NOTIFICATION SOUND
+                        var notiSound = document.getElementById("notificationSound");
+                        notiSound.play();
+
+
                     }
                 }else{
                     // alert(response["Status"]);
@@ -51,6 +66,11 @@ function getNotifications(){
 
 //Function that will send response to server-----------------
 function notificationAction(action){
+
+            //Stop NOTIFICATION SOUND
+            var notiSound = document.getElementById("notificationSound");
+            notiSound.pause();
+
     window.intervalClearance = false;
     xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
@@ -71,7 +91,7 @@ function notificationAction(action){
 
             document.getElementById("acceptButton").disabled = true;
             document.getElementById("rejectButton").disabled = true;
-            alert("called me");
+            // alert("called me");
 
             setTimeout(function(){
             var hide = document.getElementById("ringerContainer").hidden = true;
@@ -106,7 +126,7 @@ function counter(){
             clearInterval(x);
             return;
         }else if(window.intervalClearance == false){
-            document.getElementById("countDownContainer").innerHTML = "Response sent";
+            document.getElementById("countDownContainer").innerHTML = "Response sent";       
             clearInterval(x);
             return;
         }
@@ -141,3 +161,74 @@ function counter(){
     document.getElementById("carModel").innerHTML = window.response.Message["carModel"];
      
  }
+
+
+
+
+
+
+ //CHECK SESSION FUNCTION
+
+function checkSession(){
+
+    xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+
+            var response = JSON.parse(this.responseText);
+
+            if(response["Status"] == "Accept"){
+                // console.log("ajax se : ");
+                if(response["RescueType"] == "hospital" || response["RescueType"] == "carworkshop"){
+                    window.validate = true;
+                }else{
+                    window.validate = false;
+                }
+
+                // console.log(window.validate);
+
+            }else{
+                window.validate = false;
+            }
+            // console.log("ajax se : ");
+
+        }
+
+    };
+    var url = 'php/checkSession.php';
+    // console.log(url);
+    xhttp.open("GET", url, false);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.send();
+
+
+}
+
+
+function logout(){
+    xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+
+            var response = JSON.parse(this.responseText);
+
+            if(response["Status"] == "Logged out"){
+                // console.log("ajax se : ");
+                window.location.replace("index.html");
+                // console.log(window.validate);
+
+            }else{
+
+            }
+            // console.log("ajax se : ");
+
+        }
+
+    };
+    var url = 'php/checkSession.php?x=logout';
+    console.log(url);
+    xhttp.open("GET", url, false);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.send();
+
+}

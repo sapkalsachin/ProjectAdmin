@@ -3,16 +3,22 @@
 //SESSION KA KAAM BAKI HAI--------
 
     require("../../db/db.php");
+
+    if(isset($_SESSION["unique_key"])){
+
     if(isset($_GET["Id"])){
         notificationAction($_GET["Id"]);
     }elseif(isset($_GET["lastId"])){
 
         //$rescueCenterId = $_SESSION["rescueCenterId"];
-        $rescueCenterId = "ps1";
+        $rescueCenterId = $_SESSION["notId"];
         $lastId = $_GET["lastId"];
 
         getNotification($rescueCenterId, $lastId);
     }
+
+}
+
     function getNotification($rescueCenterId, $lastId)
     {
         //PREPARE QUERY-----------------------------------------------------
@@ -62,9 +68,8 @@
     }
 
 
-    function notificationAction($id, $response){
-        $select = 'SELECT * FROM notifications WHERE id = :id';
-        $update = 'UPDATE notifications SET response = :response WHERE id = :id';
+    function notificationAction($id){
+        $update = 'UPDATE notifications SET response = "Seen" WHERE id = :id';
   
         try{
         //Get DB Object........
@@ -73,36 +78,36 @@
         $db = $db->connect();
 
         //Prepared statement.......
-        $stmt = $db->prepare($select);
-        $stmt1 = $db->prepare($update);
+        $stmt = $db->prepare($update);
 
         //Binding values............    
         $stmt->bindParam(':id', $id);
-        $stmt1->bindParam(':id', $id);
         
         //$stmt->bindParam(':tableName', $tableName);
         $stmt->execute();
         if($data = $stmt->fetchAll()){
             //return $data["response"];
-            foreach ($data as $row) {
-                if($row["response"] == "Timeout"){
-                    echo'{"Status":"Failure", "Message":"Oops. You got late to respond :("}';
-                    die();
-                }elseif($row["response"] == "Pending"){
+            // foreach ($data as $row) {
+            //     if($row["response"] == "Timeout"){
+            //         echo'{"Status":"Failure", "Message":"Oops. You got late to respond :("}';
+            //         die();
+            //     }elseif($row["response"] == "Pending"){
 
-                    if($response == "Accepted")
-                        $message = "Thank you so much for helping :)";
-                    else
-                        $message = "Request rejected :(";
+            //         if($response == "Accepted")
+            //             $message = "Thank you so much for helping :)";
+            //         else
+            //             $message = "Request rejected :(";
 
 
 
-                    $stmt1->bindParam(':response', $response);
-                    $stmt1->execute();
-                    echo'{"Status":"'.$response.'", "Title":"Done" , "Message":"'.$message.'"}';
-                    die();
-                }
-            }
+            //         $stmt1->bindParam(':response', $response);
+            //         $stmt1->execute();
+            //         echo'{"Status":"'.$response.'", "Title":"Done" , "Message":"'.$message.'"}';
+            //         die();
+            //     }
+            // }
+
+            echo'{"Status":"Failure", "Message":"Response submitted"}';
 
         }else{
             echo'{"Status":"Failure", "Message":"I think there is something wrong with this emergency"}';

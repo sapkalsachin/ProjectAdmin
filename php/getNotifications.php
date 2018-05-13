@@ -3,20 +3,28 @@
 //SESSION KA KAAM BAKI HAI--------
 
     require("../../db/db.php");
-    if(isset($_GET["Id"]) && isset($_GET["Action"])){
-        if($_GET["Action"] == "Accept")
-            $response = "Accepted";
-        else
-            $response = "Rejected";
+    session_start();
+    if(isset($_SESSION["unique_key"])){
 
-        notificationAction($_GET["Id"], $response);
-    }else{
+        if(isset($_GET["Id"]) && isset($_GET["Action"])){
+            if($_GET["Action"] == "Accept")
+                $response = "Accepted";
+            else
+                $response = "Rejected";
 
-        //$rescueCenterId = $_SESSION["rescueCenterId"];
-        $rescueCenterId = "hosp4";
+            notificationAction($_GET["Id"], $response);
+        }else{
 
-        getNotification($rescueCenterId);
+            //$rescueCenterId = $_SESSION["rescueCenterId"];
+            $rescueCenterId = $_SESSION["notId"];
+
+            getNotification($rescueCenterId);
+        }
+        
     }
+
+
+
     function getNotification($rescueCenterId)
     {
         //PREPARE QUERY-----------------------------------------------------

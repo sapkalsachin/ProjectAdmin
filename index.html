@@ -104,8 +104,16 @@
                     var myObj = JSON.parse(this.responseText);
                     if(myObj["Status"] == "Success"){
 
-                          alert("LOGGED IN");
+                          if(myObj["RescueType"] == "hospital" || myObj["RescueType"] == "carworkshop"){
+                           
+                                window.location.replace("dashboard.html");
+                                
+                          }
+                          else{
+                           
+                                window.location.replace("adminPanel.html");
 
+                          }
                         }else if(myObj["Status"] == "Failure"){
 
                           alert("FAILED");
@@ -130,8 +138,13 @@ function autoLogin(){
                 if (this.readyState == 4 && this.status == 200) {
                     var myObj = JSON.parse(this.responseText);
                     if(myObj["Status"] == "Success"){
-                          document.getElementById("redirectDialog").innerHTML = "Welcome Back :)"
-                          window.location.replace("dashboard.html");
+                          document.getElementById("redirectDialog").innerHTML = "Welcome Back :)";
+                          if(myObj["RescueType"] == "hospital" || myObj["RescueType"] == "carworkshop"){
+                            window.location.replace("dashboard.html");
+                          }
+                          else{
+                            window.location.replace("adminPanel.html");
+                          }
                         }else if(myObj["Status"] == "Failure"){
                           document.getElementById("loader").hidden = true;
                           document.getElementById("loginCard").hidden = false;                          

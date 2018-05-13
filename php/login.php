@@ -21,7 +21,7 @@ header("Content-Type: application/json; charset=UTF-8");
                 // echo "remember kiya";
                 setcookie("Admin", $_SESSION["unique_key"], time() + (86400 * 30), "/"); // 86400 = 1 day
             }
-            echo'{"Status" : "Success", "Message" : "Login successful :)"}';
+            echo'{"Status" : "Success", "Message" : "Login successful :)", "RescueType" : "'.$_SESSION["rescueCenterType"].'"}';
         }elseif($success == false){
             echo'{"Status" : "Failure", "Message" : "Wrong login credentials :( "}';
         }elseif($success == "err"){
@@ -38,7 +38,7 @@ header("Content-Type: application/json; charset=UTF-8");
 
     if($success == true){
             setcookie("Admin", $unique_key, time() + (86400 * 30), "/"); // 86400 = 1 day
-            echo'{"Status" : "Success", "Message" : "Login successful with auto login :)"}';
+            echo'{"Status" : "Success", "Message" : "Login successful with auto login :)", "RescueType" : "'.$_SESSION["rescueCenterType"].'"}';
     }else{
             echo'{"Status" : "Failure", "Message" : "Login again :)"}';
     }
@@ -104,8 +104,7 @@ header("Content-Type: application/json; charset=UTF-8");
 //AUTO LOGIN FUNCTION***************************************************************************
         function autoLogin($unique_key){
 
-            $sql = "SELECT * FROM users WHERE unique_key = $unique_key";
-
+            $sql = "SELECT * FROM users WHERE unique_key = :unique_key";
             try{
                 //Get DB Object........
                 $db = new db();
@@ -114,12 +113,14 @@ header("Content-Type: application/json; charset=UTF-8");
                 $db = $db->connect();
 
                 //Prepared statement.......
-                $stmt = $db->prepare($sql);            
+                $stmt = $db->prepare($sql);    
+                $stmt->bindParam(':unique_key', $unique_key);
+
                 $stmt->execute();
                 $data = $stmt->fetchAll();
 
                 if($data){
-                    print_r($data);
+                    // print_r($data);
                     foreach($data as $row){
                         if($row["username"] == "" && $row["password"] == ""){
                             return false;
@@ -140,6 +141,8 @@ header("Content-Type: application/json; charset=UTF-8");
 
 
             } catch(PDOException $e){
+                echo "exception de rha hai : ".$e;
+
                 return "err";
             }
         }
@@ -149,7 +152,7 @@ header("Content-Type: application/json; charset=UTF-8");
 
 
 
-//CREATE SESSION FUNCTION***********************************************************************
+//CREATE SESSION FUNCTION********************************DONO ISE ACCESS KRENGE***************************************
         function createSession($param){
             $table = $param["rescuetype"];
             $id = $param["rescueid"];
@@ -165,9 +168,12 @@ header("Content-Type: application/json; charset=UTF-8");
                 $stmt = $db->prepare($sql);            
                 $stmt->execute();
                 $data = $stmt->fetchAll();
-
+                
+                // echo"create session me hu";
+                
                 if($data){
-                    $row = $data[0];
+                    foreach($data as $row);
+                    // $row = $data[0];
                     session_start();
                     $_SESSION["centerName"] = $row["centerName"];
                     $_SESSION["lat"] = $row["locLatitude"];
@@ -179,7 +185,9 @@ header("Content-Type: application/json; charset=UTF-8");
                     $_SESSION["state"] = $row["state"];
                     $_SESSION["rescueid"] = $id;        //rescue table se rescueCenter ka id
                     $_SESSION["unique_key"] = $param["unique_key"]; //Userid from users table
+                    $_SESSION["rescueCenterType"] = $table;
 
+                    // echo("session ko dikha rha hu".$_SESSION["rescueCenterType"]);
 
                     //notId for notifications table.......
                     if($table == "hospital"){
@@ -201,11 +209,13 @@ header("Content-Type: application/json; charset=UTF-8");
                     return true;
                     
                 }else{
+                    echo"false bheja";
                     return false;
                 }
 
 
             } catch(PDOException $e){
+                echo"idhar err hai ".$e;
                 return "err";
             }
 
