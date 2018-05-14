@@ -13,6 +13,9 @@
   <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <!-- Custom fonts for this template-->
   <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+   <!-- Page level plugin CSS-->
+   <link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+ 
   <!-- Custom styles for this template-->
   <link href="css/sb-admin.css" rel="stylesheet">
 </head>
@@ -26,27 +29,75 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav navbar-sidenav collapsed" id="exampleAccordion">
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
+          <a class="nav-link" href="#page-top">
+            <i class="fa fa-fw fa-dashboard"></i>
+            <span class="nav-link-text">Dashboard</span>
+          </a>
+        </li>
+
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="requests">
+          <a class="nav-link" href="#notificationTable">
+            <i class="fa fa-fw fa-table"></i>
+            <span class="nav-link-text">Notification Table</span>
+          </a>
+        </li>
+        <!-- <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Profile">
+          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#profile" data-parent="#exampleAccordion">
+            <i class="fa fa-fw fa-user"></i>
+            <span class="nav-link-text">Profile</span>
+          </a>
+          <ul class="sidenav-second-level collapse" id="profile">
+            <li>
+              <a href="profile.html.html"><i class="fa fa-address-card"></i> View profile</a>
+            </li>
+            <li>
+              <a href="changepassword.html"><i class="fa fa-pencil"></i> Change Password</a>
+            </li>
+          </ul>
+        </li> -->
+
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Logout">
+          <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
+            <i class="fa fa-fw fa-sign-out"></i>
+            <span class="nav-link-text">logout</span>
+          </a>
+        </li>
+
+      </ul>
+      <ul class="navbar-nav sidenav-toggler">
+        <li class="nav-item">
+          <a class="nav-link text-center" id="sidenavToggler">
+            <i class="fa fa-fw fa-angle-left"></i>
+          </a>
+        </li>
+      </ul>
+
+
       <ul class="navbar-nav">
 
           <li class="nav-item">
-              <!-- <span class="nav-link" id="totalRequests"><i class="fa fa-arrow-circle-down"></i> Total requests</span> -->
+              <span class="nav-link"><i class="fa fa-eye"></i> Seen <span  class="badge badge-pill badge-success"id="seenRequests"> 0 </span></span>
           </li>
          
           <li class="nav-item">
-            <!-- <span class="nav-link" id="totalRequests"><i class="fa fa-arrow-circle-up"></i> Total response</span> -->
+              <span class="nav-link" ><i class="fa fa-list-ol"></i>  Total <span  class="badge badge-pill badge-success" id="totalRequests"> 0 </span></span>
           </li>
-   
+
+        <li class="nav-item">
+          <a class="nav-link mr-lg-2" href="#notificationTable">
+            <i class="fa fa-fw fa-bell"></i>
+
+              <span class="badge badge-pill badge-danger" id="newNot">0</span>
+          </a>
+        </li>
+
+     
       </ul>
 
 
       <ul class="navbar-nav  ml-auto">
-
-        
-          <li class="nav-item">
-              <span class="nav-link" id="fullScreen" onclick="fullScreen()"><i class="fa fa-expand"></i></span>
-          </li>
-    
-
           <li class="nav-item">
               <b class="nav-link" style="color: white;" id="liveClock"></b>
          </li>
@@ -62,11 +113,11 @@
 
 <!-- Navbar chhodke baki sab content-wraper me jayega************************************************** -->
 
-  <div class="content-wrapper">
+  <div class="content-wrapper" style="background-color: rgb(242, 235, 235);">
     <div class="container-fluid" style="margin: 10px 0px;">
 
     <!-- First row************************************************************************ -->
-          <div class="row">
+    <div class="row">
             <div class="col-md-8 col-lg-8">
               <div class="card map" id="map">
                 <div class="card-header">
@@ -114,15 +165,15 @@
                             <td class="text-left" id="mainMobile">-----------</td>
                           </tr>
                           <tr>
-                              <th class="text-right">Car No : </th>
+                              <th class="text-right">Vehical No e </th>
                               <td class="text-left" id="carNo">-----------</td>
                           </tr>
                           <tr>
-                              <th class="text-right">Car colour : </th>
+                              <th class="text-right">Vehical coleur : </th>
                               <td class="text-left" id="carColor">-----------</td>
                           </tr>
                           <tr>
-                              <th class="text-right">Car Modal : </th>
+                              <th class="text-right">Vehical Model : </th>
                               <td class="text-left" id="carModel">-----------</td>
                           </tr>                    
                         </tbody>
@@ -132,12 +183,58 @@
               </div>
             </div>
           </div>
-    <!-- First row ends here **************************************************************  -->
+    <!-- First row ends here **************MAP WALI ROW*****************************  -->
+
+    <br>
 
 
+    <!-- SECOND ROW START HERE *****************TABLE WALI ROW********************** -->
+        <div  id="notificationTable" style="background-color:white;">
+                <br>
 
+                    <h3 style="text-align: center;" class="text-center text-danger">Emergency Log</h3 style="text-align: center;">
+            <br>
 
-
+            <div class="row">
+                <div class="col-sm-12">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Situation</th>
+                            <th>Location</th>
+                            <th>Time</th>
+                            <th>Distance</th>
+                            <th>Travel Time</th>
+                            <th>Owner Name</th>
+                            <th>Mobile Number</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>Situation</th>
+                            <th>Location</th>
+                            <th>Time</th>
+                            <th>Distance</th>
+                            <th>Travel Time</th>
+                            <th>Owner Name</th>
+                            <th>Mobile Number</th>
+                            <th>Action</th>
+                        </tr>
+                    </tfoot>
+                    <tbody id="emLogTbody">
+ 
+                        <!-- The table rows  willl be appedded -->
+                        
+                    </tbody>
+                    </table>
+                </div>
+                </div>
+            </div>
+        
+        </div>
+        
     </div>
 
     <!-- /.container-fluid-->
@@ -168,10 +265,10 @@
               <span aria-hidden="true">×</span>
             </button>
           </div>
-          <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+          <div class="modal-body">If you logout. You automatic login won't work!</div>
           <div class="modal-footer">
             <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-            <button onclick="logout()" class="btn btn-primary" href="login.html">Logout</a>
+            <button onclick="logout();"class="btn btn-primary">Logout</a>
           </div>
         </div>
       </div>
@@ -182,10 +279,15 @@
 
 
   </div>
-  <!-- Content-Wraper ends here***************************************************************************************************** -->
+  <!-- Content-Wraper ends here**upar*************************************************************************************************** -->
 
 </div>
 
+
+<!-- NOTIFICATION SOUND ************************************************************************ -->
+<audio id="notificationSound" allow="autoplay">
+  <source src="sounds/notify.ogg" type="audio/ogg">
+</audio>
 
 
 
@@ -201,99 +303,6 @@
   
 
 
-<!-- NOTIFICATION SOUND ************************************************************************ -->
-<audio id="notificationSound" loop allow="autoplay">
-  <source src="sounds/call.ogg" type="audio/ogg">
-    <source src="sounds/call.mp3" type="audio/mpeg">
-</audio>
-
-
-
-
-<!-- Ringer Div********************************************************************************** -->
-<div class="ringerContainer" id="ringerContainer" hidden>
-  <div class="container" id="ringerDiv">
-    <div class="row">
-        <div class="col">
-          <div class="card text-center cardShadow">
-            <div class="card-header">
-                <h3 class="text-red float-left"><i class="fa fa-bell"></i> Emergency occured !</h3>
-                <h5 class=" float-right text-danger" id="countDownContainer"> </h5>
-              </div>
-
-            <div class="card-body">
-                <div class="float-left" id="tempMapContainer">
-                  <div  id="tempMap">
-                    
-                  </div>
-                  <div id="tempTravelInfo">
-                    <b id="tempEmDistance" class="float-left" style="padding: 7px;">Distance : 51km</b>
-                    <b id="tempTravelTime" class="float-right" style="padding: 7px;">Travel time : 50 min </b>
-                  </div>
-                </div>
-                <div class="float-right" id="tempDetails">
-                  <table class="table table-hover">
-
-                    <tbody>
-                      <tr>
-                        <th class="text-right">Time : </th>
-                        <td id="tempEmTime" class="text-left">xx:xx:xx</td>
-                      </tr>
-                      <tr>
-                        <th class="text-right">Location : </th>
-                        <td id="tempEmLocation" class="text-left">xxxx xxxxxx xxxxxxxxxxxx xxxxxxxxxxxxx xxxxxxxxxxxx </td>
-                      </tr>
-                      <tr>
-                        <th class="text-right">Owner name : </th>
-                        <td id="tempEmOwner" class="text-left">xxxxxx xxxxxx</td>
-                      </tr>
-                      <tr>
-                        <th class="text-right">Mobile : </th>
-                        <td id="tempEmMobile" class="text-left">xxxxxxxxxx</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-
-            <div class="card-footer">
-                <button type="button" id="acceptButton" onclick="notificationAction('Reject')" class="btn btn-danger float-left">Reject</button>
-                <button type="button" id="rejectButton" onclick="notificationAction('Accept')" class="btn btn-success float-right">Accept</button>
-            </div>
-          </div>
-        </div>
-      
-    </div>
-  </div>
-</div>
-
-<!-- Ringer Div Ends here********************************************************************** -->
-
-
-
-
-
-
-  <div class="modal fade" id="responseModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="responseModalTitle"></h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <h4 id="responseModalBody">
-
-            </h4>
-          </div>
-          <div class="modal-footer">
-            
-          </div>
-        </div>
-      </div>
-    </div>
 
     
 </body>
@@ -302,8 +311,13 @@
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- Core plugin JavaScript-->
     <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+        <!-- Page level plugin JavaScript-->
+        <script src="vendor/datatables/jquery.dataTables.js"></script>
+        <script src="vendor/datatables/dataTables.bootstrap4.js"></script>
+        <script src="js/sb-admin-datatables.min.js"></script>
+
     <!-- Custom scripts for all pages-->
-    <!-- <script src="js/sb-admin.js"></script> -->
+    <script src="js/sb-admin.js"></script>
 
 <script>
     function startTime() {
@@ -324,7 +338,7 @@
     }
     </script>
 
-<script src="../admin/custom/js/getNotifications.js"></script>
+<script src="../admin/custom/js/fetchNotifications.js"></script>
 
 <script>
 

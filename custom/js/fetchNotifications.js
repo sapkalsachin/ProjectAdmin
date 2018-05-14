@@ -1,4 +1,16 @@
 (function($){
+
+
+//Some global declarations
+    isfullscreen = false;
+    var responce;
+    window.lastId = 0;
+    window.arrIndex = 0;
+    window.globalResponse = new Array();
+    // var intervalClearance = true;
+    
+    
+
     checkSession();
     if(window.validate){
         document.getElementById("dashboardToggle").hidden = false;
@@ -8,12 +20,6 @@
         document.getElementById("authenticationMessage").hidden = false;
     }
 })(jQuery);
-var responce;
-window.lastId = 0;
-window.arrIndex = 0;
-var globalResponse = new Array();
-// var intervalClearance = true;
-
 
 //Funtion That will fetch notifications----------------------
 function getNotifications(){
@@ -31,7 +37,8 @@ function getNotifications(){
                     // alert(count);
 
                     if(window.lastId == 0){
-                        
+                        emLogTbody.innerHTML = ""; //Table khali kr raha hai....mozila me krna pdta hai....
+
                         newNot = 0;
 
                         for(var i=0; i<count; i++){
@@ -73,9 +80,9 @@ function getNotifications(){
 
                                 }
 
-                                window.globalResponse[arrIndex] = rowObj;
+                                window.globalResponse[window.arrIndex] = rowObj;
                                 
-                                refCls = 'ref_'+arrIndex; //reference class is for referring the perticular <td> tag using global arrIndex
+                                refCls = 'ref_'+window.arrIndex; //reference class is for referring the perticular <td> tag using global arrIndex
 
 
                                 tableRow = '<tr>'+
@@ -86,8 +93,9 @@ function getNotifications(){
                                                 '<td class="text-center '+cls+' '+refCls+'">'+response.row[i].Message.travelTime+'</td>'+
                                                 '<td class="text-center '+cls+' '+refCls+'">'+response.row[i].Message.ownerName+'</td>'+
                                                 '<td class="text-center '+cls+' '+refCls+'">'+response.row[i].Message.mobNo+'</td>'+
-                                                '<td class="text-center '+cls+' '+refCls+'"><a href="#page-top" id="'+arrIndex+'" class="btn '+btnCls+' btn-sm" onclick="showOnMap('+arrIndex+')">'+action+'</a></td>'+
+                                                '<td class="text-center '+cls+' '+refCls+'"><p id="'+window.arrIndex+'" class="btn '+btnCls+' btn-sm" onclick="showOnMap('+window.arrIndex+')">'+action+'</p></td>'+
                                             '</tr>';
+
                                     $("#emLogTbody").append(tableRow);
                                 window.arrIndex ++;
                                 // console.log("inc kiya hhua arrindexx"+arrIndex);
@@ -105,7 +113,7 @@ function getNotifications(){
 
                             }else{
                                 action = "Viewed";
-                                cls = "text-muted"
+                                cls = "text-muted";
                                 btnCls = "btn-link";
                             }
 
@@ -132,9 +140,9 @@ function getNotifications(){
 
                             }
 
-                            window.globalResponse[arrIndex] = rowObj;
+                            window.globalResponse[window.arrIndex] = rowObj;
                             
-                            refCls = 'ref_'+arrIndex; //reference class is for referring the perticular <td> tag using global arrIndex
+                            refCls = 'ref_'+window.arrIndex; //reference class is for referring the perticular <td> tag using global arrIndex
 
                             tableRow = '<tr>'+
                                             '<td class="text-center '+cls+' '+refCls+'">'+response.row[j].Message.emergencyType+'</td>'+
@@ -144,7 +152,7 @@ function getNotifications(){
                                             '<td class="text-center '+cls+' '+refCls+'">'+response.row[j].Message.travelTime+'</td>'+
                                             '<td class="text-center '+cls+' '+refCls+'">'+response.row[j].Message.ownerName+'</td>'+
                                             '<td class="text-center '+cls+' '+refCls+'">'+response.row[j].Message.mobNo+'</td>'+
-                                            '<td class="text-center '+cls+' '+refCls+'"><a href="#page-top" id="'+arrIndex+'" class="btn '+btnCls+' btn-sm" onclick="showOnMap('+arrIndex+')">'+action+'</a></td>'+
+                                            '<td class="text-center '+cls+' '+refCls+'"><p id="'+window.arrIndex+'" class="btn '+btnCls+' btn-sm" onclick="showOnMap('+window.arrIndex+')">'+action+'</p></td>'+
                                         '</tr>';
                             $("#emLogTbody").prepend(tableRow);
                             window.arrIndex++;
@@ -160,7 +168,14 @@ function getNotifications(){
                     notiSound.play();
 
 
-                    window.lastId = response.row[0].id; //last id dikhataa hai table ka.                    
+                    window.lastId = response.row[0].id; //last id dikhataa hai table ka. 
+                    
+                    
+                    //dataTable ko refresh kiya
+                    // $('#dataTable').DataTable();
+
+
+
                 }else{
                     //alert(response["Status"]);
                 }
@@ -177,7 +192,7 @@ function getNotifications(){
 //Function that will send response to server-----------------
 function notificationAction(id){
     // window.intervalClearance = false;
-    console.log("Sending info");
+    // console.log("Sending info");
     xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
@@ -199,7 +214,7 @@ function notificationAction(id){
         }
     };
     var url = 'php/getPsCvoffNotifications.php?Id='+id;
-    console.log(url);
+    // console.log(url);
     xhttp.open("GET", url, true);
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.send();
@@ -216,10 +231,10 @@ function notificationAction(id){
 function showOnMap(index){
     
     // alert("from show on map : "+index);
-    console.log("srclat : "+window.globalResponse[index].srcLat);
-    console.log("srclng : "+window.globalResponse[index].srcLng);
-    console.log("destlat : "+window.globalResponse[index].destLat);
-    console.log("destlat : "+window.globalResponse[index].destLng);
+    // console.log("srclat : "+window.globalResponse[index].srcLat);
+    // console.log("srclng : "+window.globalResponse[index].srcLng);
+    // console.log("destlat : "+window.globalResponse[index].destLat);
+    // console.log("destlat : "+window.globalResponse[index].destLng);
     
     //To display map
         mapDiv = document.getElementById("mainMap");
@@ -240,10 +255,13 @@ function showOnMap(index){
     document.getElementById("carColor").innerHTML = window.globalResponse[index].vehicalColor;
     document.getElementById("carModel").innerHTML = window.globalResponse[index].vehicalModel;
     
-    console.log("response is "+window.globalResponse[index].response);
+    window.scrollTo(0, 0); 
+
+
+    // console.log("response is "+window.globalResponse[index].response);
 
     if(window.globalResponse[index].response == "Sent"){
-        console.log("info  send");
+        // console.log("info  send");
 
         notificationAction(window.globalResponse[index].id);
         changeTdColor(index);
@@ -257,7 +275,7 @@ function showOnMap(index){
 
 
     }else{
-        console.log("info ddnt send");
+        // console.log("info ddnt send");
     }
 
 
@@ -265,8 +283,37 @@ function showOnMap(index){
  }
 
 
+
+ function initMap(mapDiv, origin, destination) {
+    var directionsService = new google.maps.DirectionsService;
+    var directionsDisplay = new google.maps.DirectionsRenderer;
+    var map = new google.maps.Map(mapDiv, {
+      zoom: 7,
+      center: origin
+    });
+    directionsDisplay.setMap(map);
+
+    directionsService.route({
+      origin: origin,
+      destination: destination,
+      travelMode: 'DRIVING'
+    }, function(response, status) {
+      if (status === 'OK') {
+        directionsDisplay.setDirections(response);
+      } else {
+        mapDiv.innerHTML = 'Directions request failed due to ' + status;
+      }
+    });
+  }
+
+
+
+
+
+
+
 function changeTdColor(index){
-    console.log("color change index is "+index);
+    // console.log("color change index is "+index);
     refCls = '.ref_'+index;
 
     $(refCls).removeClass("text-success");
@@ -275,6 +322,7 @@ function changeTdColor(index){
     $('#'+index).removeClass("btn-success");
     $('#'+index).addClass("btn-muted");
     document.getElementById(index).innerHTML = "Viewed"
+    
     
 }
 
@@ -310,7 +358,7 @@ function checkSession(){
 
     };
     var url = 'php/checkSession.php';
-    console.log(url);
+    // console.log(url);
     xhttp.open("GET", url, false);
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.send();
@@ -340,9 +388,69 @@ function logout(){
 
     };
     var url = 'php/checkSession.php?x=logout';
-    console.log(url);
+    // console.log(url);
     xhttp.open("GET", url, false);
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.send();
 
+}
+
+
+
+// CODE TO SHOW FULL SCREEN
+function fullScreen(){
+    db = document.body;
+	if(isfullscreen == false){
+		if(db.requestFullScreen){
+		    db.requestFullScreen();
+		} else if(db.webkitRequestFullscreen){
+		    db.webkitRequestFullscreen();
+		} else if(db.mozRequestFullScreen){
+		    db.mozRequestFullScreen();
+		} else if(db.msRequestFullscreen){
+		    db.msRequestFullscreen();
+		}
+		isfullscreen = true;
+		dashboardToggle.style.width = window.screen.width+"px";
+        dashboardToggle.style.height = window.screen.height+"px";
+        document.getElementById("fullScreen").innerHTML = '<i class="fa fa-compress"></i>';
+
+	} else {
+		if(document.cancelFullScreen){
+		    document.cancelFullScreen();
+		} else if(document.exitFullScreen){
+		    document.exitFullScreen();
+		} else if(document.mozCancelFullScreen){
+		    document.mozCancelFullScreen();
+		} else if(document.webkitCancelFullScreen){
+		    document.webkitCancelFullScreen();
+		} else if(document.msExitFullscreen){
+		    document.msExitFullscreen();
+		}
+		isfullscreen = false;
+		dashboardToggle.style.width = "100%";
+        dashboardToggle.style.height = "auto";
+        document.getElementById("fullScreen").innerHTML = '<i class="fa fa-expand"></i>';
+
+	}
+}
+
+
+//TIME TO SHOW ON NAV BAR
+
+function startTime() {
+    var today = new Date();
+    var h = today.getHours();
+    var m = today.getMinutes();
+    var s = today.getSeconds();
+    h = checkTime(h);
+    m = checkTime(m);
+    s = checkTime(s);
+    document.getElementById('liveClock').innerHTML =
+    "Time : "+h + ":" + m + ":" + s;
+    var t = setTimeout(startTime, 500);
+}
+function checkTime(i) {
+    if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+    return i;
 }

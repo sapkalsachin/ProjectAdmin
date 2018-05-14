@@ -20,59 +20,16 @@
   <link href="css/sb-admin.css" rel="stylesheet">
 </head>
 
-<body class="fixed-nav sticky-footer" id="page-top" onload="startTime()">
+<body class="fixed-nav" style="overflow: auto;" id="page-top" onload="startTime()">
   <!-- Navigation-->
-<div id="dashboardToggle" hidden >
+<div id="dashboardToggle" style="overflow-x:hidden; overflow-y: auto" hidden style="" >
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark  fixed-top" id="mainNav">
-    <a class="navbar-brand" style="color: #f94808" href="dashboard.html"><b>Dashboard</b> | wegotyou.in</a>
+    <a class="navbar-brand" style="color: #f94808" onclick="location.reload(true)"><b>Dashboard</b> | wegotyou.in</a>
     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarResponsive">
-      <ul class="navbar-nav navbar-sidenav collapsed" id="exampleAccordion">
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
-          <a class="nav-link" href="#page-top">
-            <i class="fa fa-fw fa-dashboard"></i>
-            <span class="nav-link-text">Dashboard</span>
-          </a>
-        </li>
-
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="requests">
-          <a class="nav-link" href="#notificationTable">
-            <i class="fa fa-fw fa-table"></i>
-            <span class="nav-link-text">Notification Table</span>
-          </a>
-        </li>
-        <!-- <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Profile">
-          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#profile" data-parent="#exampleAccordion">
-            <i class="fa fa-fw fa-user"></i>
-            <span class="nav-link-text">Profile</span>
-          </a>
-          <ul class="sidenav-second-level collapse" id="profile">
-            <li>
-              <a href="profile.html.html"><i class="fa fa-address-card"></i> View profile</a>
-            </li>
-            <li>
-              <a href="changepassword.html"><i class="fa fa-pencil"></i> Change Password</a>
-            </li>
-          </ul>
-        </li> -->
-
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Logout">
-          <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
-            <i class="fa fa-fw fa-sign-out"></i>
-            <span class="nav-link-text">logout</span>
-          </a>
-        </li>
-
-      </ul>
-      <ul class="navbar-nav sidenav-toggler">
-        <li class="nav-item">
-          <a class="nav-link text-center" id="sidenavToggler">
-            <i class="fa fa-fw fa-angle-left"></i>
-          </a>
-        </li>
-      </ul>
+      
 
 
       <ul class="navbar-nav">
@@ -98,6 +55,12 @@
 
 
       <ul class="navbar-nav  ml-auto">
+
+            <li class="nav-item">
+                    <span class="nav-link" id="fullScreen" onclick="fullScreen()"><i class="fa fa-expand"></i></span>
+            </li>
+                
+
           <li class="nav-item">
               <b class="nav-link" style="color: white;" id="liveClock"></b>
          </li>
@@ -182,6 +145,8 @@
                 </div>
               </div>
             </div>
+
+
           </div>
     <!-- First row ends here **************MAP WALI ROW*****************************  -->
 
@@ -189,47 +154,58 @@
 
 
     <!-- SECOND ROW START HERE *****************TABLE WALI ROW********************** -->
-        <div  id="notificationTable" style="background-color:white;">
+        <div  id="notificationTable">
                 <br>
 
-                    <h3 style="text-align: center;" class="text-center text-danger">Emergency Log</h3 style="text-align: center;">
             <br>
 
+
+       
             <div class="row">
-                <div class="col-sm-12">
-                <div class="table-responsive">
-                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                    <thead>
-                        <tr>
-                            <th>Situation</th>
-                            <th>Location</th>
-                            <th>Time</th>
-                            <th>Distance</th>
-                            <th>Travel Time</th>
-                            <th>Owner Name</th>
-                            <th>Mobile Number</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tfoot>
-                        <tr>
-                            <th>Situation</th>
-                            <th>Location</th>
-                            <th>Time</th>
-                            <th>Distance</th>
-                            <th>Travel Time</th>
-                            <th>Owner Name</th>
-                            <th>Mobile Number</th>
-                            <th>Action</th>
-                        </tr>
-                    </tfoot>
-                    <tbody id="emLogTbody">
- 
-                        <!-- The table rows  willl be appedded -->
-                        
-                    </tbody>
-                    </table>
-                </div>
+                    <div class="col-sm-12">
+                    <div class="card">
+
+                        <div class="card-header">
+                            <h3 style="text-align: center;" class="text-center text-danger"><i class="fa fa-info-circle"></i> <b>Emergency Log</b></h3 style="text-align: center;">
+
+                          </div>
+        
+
+                    <div class="card-body">
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Situation</th>
+                                <th>Location</th>
+                                <th>Time</th>
+                                <th>Distance</th>
+                                <th>Travel Time</th>
+                                <th>Owner Name</th>
+                                <th>Mobile Number</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th>Situation</th>
+                                <th>Location</th>
+                                <th>Time</th>
+                                <th>Distance</th>
+                                <th>Travel Time</th>
+                                <th>Owner Name</th>
+                                <th>Mobile Number</th>
+                                <th>Action</th>
+                            </tr>
+                        </tfoot>
+                        <tbody id="emLogTbody">
+    
+                            <!-- The table rows  willl be appedded -->
+                            
+                        </tbody>
+                        </table>
+                        </div>
+                    </div>
+                    </div>
                 </div>
             </div>
         
@@ -308,64 +284,25 @@
 </body>
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="js/sb-admin.js"></script>
+
     <!-- Core plugin JavaScript-->
     <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
         <!-- Page level plugin JavaScript-->
-        <script src="vendor/datatables/jquery.dataTables.js"></script>
-        <script src="vendor/datatables/dataTables.bootstrap4.js"></script>
-        <script src="js/sb-admin-datatables.min.js"></script>
+        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <!-- <script src="vendor/datatables/jquery.dataTables.js"></script> -->
+        <!-- <script src="vendor/datatables/dataTables.bootstrap4.js"></script> -->
 
     <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin.js"></script>
-
-<script>
-    function startTime() {
-        var today = new Date();
-        var h = today.getHours();
-        var m = today.getMinutes();
-        var s = today.getSeconds();
-        h = checkTime(h);
-        m = checkTime(m);
-        s = checkTime(s);
-        document.getElementById('liveClock').innerHTML =
-        "Time : "+h + ":" + m + ":" + s;
-        var t = setTimeout(startTime, 500);
-    }
-    function checkTime(i) {
-        if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
-        return i;
-    }
-    </script>
-
-<script src="../admin/custom/js/fetchNotifications.js"></script>
-
-<script>
+    <!-- <script src="js/sb-admin-datatables.min.js"></script> -->
+    <script src="../admin/custom/js/fetchNotifications.js"></script>
 
 
 
-  function initMap(mapDiv, origin, destination) {
-    var directionsService = new google.maps.DirectionsService;
-    var directionsDisplay = new google.maps.DirectionsRenderer;
-    var map = new google.maps.Map(mapDiv, {
-      zoom: 7,
-      center: origin
-    });
-    directionsDisplay.setMap(map);
 
-    directionsService.route({
-      origin: origin,
-      destination: destination,
-      travelMode: 'DRIVING'
-    }, function(response, status) {
-      if (status === 'OK') {
-        directionsDisplay.setDirections(response);
-      } else {
-        mapDiv.innerHTML = 'Directions request failed due to ' + status;
-      }
-    });
-  }
-</script>
+
+
+
 
 
 <script async defer

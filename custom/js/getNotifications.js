@@ -1,9 +1,15 @@
 (function($){
+
+    isfullscreen = false;
+    window.response;
+    window.lastId = 0;
+    window.intervalClearance = true;
+    window.engaged = false;
+
     checkSession();
     if(window.validate){
         document.getElementById("dashboardToggle").hidden = false;
         document.getElementById("authenticationMessage").hidden = true;
-
         //CALLING getNotifications() function
         getNotifications();
     }else{
@@ -12,9 +18,7 @@
 
     }
 })(jQuery);
-var responce;
-var lastId;
-var intervalClearance = true;
+
 
 
 //Funtion That will fetch notifications----------------------
@@ -22,10 +26,15 @@ function getNotifications(){
         xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
-                 window.response = JSON.parse(this.responseText);
-                if(response["Status"] == "Success"){
-                    if(response['id'] == window.lastId){
-                    }else{
+                 tempresponse = JSON.parse(this.responseText);
+                if(tempresponse["Status"] == "Success"){
+                    if(tempresponse['id'] == window.lastId || window.engaged == true){
+
+                    }
+                    else
+                    {
+                        window.response = tempresponse;
+                        window.engaged = true;
                         document.getElementById("ringerContainer").hidden = false;
                         document.getElementById("tempEmDistance").innerHTML = "Distance : "+response.Message["travelTime"];
                         document.getElementById("tempTravelTime").innerHTML = "Travel Time : "+response.Message["distance"];
@@ -57,7 +66,7 @@ function getNotifications(){
                 setTimeout(getNotifications, 3000);
             }
         };
-        var url = "php/getNotifications.php";
+        var url = "php/getNotifications.php?lastId="+window.lastId;
         xhttp.open("GET", url, true);
         xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xhttp.send();
@@ -66,6 +75,8 @@ function getNotifications(){
 
 //Function that will send response to server-----------------
 function notificationAction(action){
+
+            window.engaged = false;
 
             //Stop NOTIFICATION SOUND
             var notiSound = document.getElementById("notificationSound");
@@ -231,4 +242,44 @@ function logout(){
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.send();
 
+}
+
+
+// CODE TO SHOW FULL SCREEN
+function fullScreen(){
+    db = document.body;
+	if(isfullscreen == false){
+		if(db.requestFullScreen){
+		    db.requestFullScreen();
+		} else if(db.webkitRequestFullscreen){
+		    db.webkitRequestFullscreen();
+		} else if(db.mozRequestFullScreen){
+		    db.mozRequestFullScreen();
+		} else if(db.msRequestFullscreen){
+		    db.msRequestFullscreen();
+		}
+		isfullscreen = true;
+		db.style.width = window.screen.width+"px";
+        db.style.height = window.screen.height+"px";
+        
+        document.getElementById("fullScreen").innerHTML = '<i class="fa fa-compress"></i>';
+
+	} else {
+		if(document.cancelFullScreen){
+		    document.cancelFullScreen();
+		} else if(document.exitFullScreen){
+		    document.exitFullScreen();
+		} else if(document.mozCancelFullScreen){
+		    document.mozCancelFullScreen();
+		} else if(document.webkitCancelFullScreen){
+		    document.webkitCancelFullScreen();
+		} else if(document.msExitFullscreen){
+		    document.msExitFullscreen();
+		}
+		isfullscreen = false;
+		db.style.width = "100%";
+        db.style.height = "auto";
+        document.getElementById("fullScreen").innerHTML = '<i class="fa fa-expand"></i>';
+
+	}
 }

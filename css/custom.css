@@ -1,3 +1,15 @@
+#page-top{
+  background-color: #dee2e6;
+
+}
+
+
+::-webkit-scrollbar {
+  display: none;
+  }
+
+
+
 .text-red{
     color: rgba(228, 20, 58, 0.981);
 }

@@ -17,19 +17,19 @@
 
             //$rescueCenterId = $_SESSION["rescueCenterId"];
             $rescueCenterId = $_SESSION["notId"];
-
-            getNotification($rescueCenterId);
+            $lastId = $_GET["lastId"];
+            getNotification($rescueCenterId, $lastId);
         }
         
     }
 
 
 
-    function getNotification($rescueCenterId)
+    function getNotification($rescueCenterId, $lastId)
     {
         //PREPARE QUERY-----------------------------------------------------
      
-            $sql = 'SELECT * FROM notifications WHERE rescueid = :rescueid && response = "Pending" ORDER BY id DESC LIMIT 1';
+           $sql = 'SELECT * FROM notifications WHERE (rescueid = :rescueid && response = "Pending" && id > :lastId) ORDER BY id DESC LIMIT 1';
   
             try{
             //Get DB Object........
@@ -40,8 +40,10 @@
             //Prepared statement.......
             $stmt = $db->prepare($sql);
 
+
             //Binding values............    
             $stmt->bindParam(':rescueid', $rescueCenterId);
+            $stmt->bindParam(':lastId', $lastId);
             //$stmt->bindParam(':tableName', $tableName);
             $stmt->execute();
             if($data = $stmt->fetchAll()){
@@ -55,7 +57,7 @@
             }
             } catch(PDOException $e){
                 // echo $e;
-                echo'{"Status":"Failure", "Message" : "Something went wrong while fetching notifications."}';
+                echo'{"Status":"Failure", "Message" : "Something went wrong while fetching notifications."}'.$e;
             }
 
 
