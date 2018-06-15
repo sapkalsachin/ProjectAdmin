@@ -50,7 +50,7 @@ $obj = json_decode($_POST["x"], false);
 
     $keyUpdate = "UPDATE users SET keyactive = 1,
                                         username = :username,
-                                        password = :password,js
+                                        password = :password,
                                         rescuetype = :rescuetype,
                                         rescueid = :rescueid
                                         WHERE unique_key = :uniqueKey";
